@@ -76,6 +76,18 @@ for xxx in range(10):
     for line_begin, line_end in ls2:
         plt.plot((y, y), (line_begin, line_end), 'g')
 
+    print(ls1)
+    print(ls2)
+
+    sum1 = 0.0
+    for line_begin, line_end in ls1:
+        sum1 += line_end - line_begin
+    result1.append(sum1 / xsize)
+    sum2 = 0.0
+    for line_begin, line_end in ls2:
+        sum2 += line_end - line_begin
+    result2.append(sum2 / xsize)
+
 
 print(result1)
 print(result2)
