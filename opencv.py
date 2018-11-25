@@ -2,39 +2,56 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-img = cv2.imread('img.bmp')
-kernel = np.ones((5, 5), np.float32) / 25
-dst = cv2.filter2D(img, -1, kernel)
-
+img = cv2.imread('img.png')
 MAGIC = 645
-ysize, xsize, _ = dst.shape
+ysize, xsize, _ = img.shape
 
-plt.imshow(dst)
+plt.imshow(img)
 plt.xticks(np.arange(0, xsize, MAGIC), labels=np.arange(0, 1000, 100))
 plt.yticks(np.arange(0, ysize, MAGIC), labels=np.arange(0, 1000, 100))
-plt.show()
 
-# frame = cv2.imread('img.bmp')
-#
-#
-# # Convert BGR to HSV
-# hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-#
-# # define range of blue color in HSV
-# lower_blue = np.array([110, 50, 50])
-# upper_blue = np.array([130, 255, 255])
-#
-# # Threshold the HSV image to get only blue colors
-# mask = cv2.inRange(hsv, lower_blue, upper_blue)
-#
-# # Bitwise-AND mask and original image
-# res = cv2.bitwise_and(frame, frame, mask=mask)
-#
-# cv2.imshow('frame', frame)
-# cv2.imshow('mask', mask)
-# cv2.imshow('res', res)
-# # k = cv2.waitKey(5) & 0xFF
-# # if k == 27:
-# #     break
-# cv2.w
-# cv2.destroyAllWindows()
+
+result1 = []
+result2 = []
+
+# горизонтальные линии
+for xxx in range(10):
+    y = int(ysize * (xxx / 10))
+
+    ls1 = [(0, 0)]
+    ls2 = [(0, 0)]
+    for x, (v, _, _) in enumerate(img[y]):
+        if 240 < v:
+            line_begin, line_end = ls1[-1]
+            if line_end + 1 == x:
+                ls1[-1] = line_begin, x
+            else:
+                ls1.append((x, x))
+        elif 150 < v:
+            line_begin, line_end = ls2[-1]
+            if line_end + 1 == x:
+                ls2[-1] = line_begin, x
+            else:
+                ls2.append((x, x))
+
+    for line_begin, line_end in ls1:
+        plt.plot((line_begin, line_end), (y, y), 'r')
+    for line_begin, line_end in ls2:
+        plt.plot((line_begin, line_end), (y, y), 'g')
+
+    print(ls1)
+    print(ls2)
+
+    sum1 = 0.0
+    for line_begin, line_end in ls1:
+        sum1 += line_end - line_begin
+    result1.append(sum1 / xsize)
+    sum2 = 0.0
+    for line_begin, line_end in ls2:
+        sum2 += line_end - line_begin
+    result2.append(sum2 / xsize)
+
+print(result1)
+print(result2)
+
+plt.show()
