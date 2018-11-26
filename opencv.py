@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
@@ -99,10 +100,10 @@ plt.show()
 
 
 plt.subplot(211)
-plt.hist(result1, 5, density=True, facecolor='g', alpha=0.75)
+plt.hist(result1, 5, density=True, facecolor='r')
 plt.yticks([])
 plt.subplot(212)
 plt.yticks([])
-plt.hist(result2, 5, density=True, facecolor='g', alpha=0.75)
+plt.hist(result2, 5, density=True, facecolor='g')
 
 plt.show()
