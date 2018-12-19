@@ -20,6 +20,8 @@ result3 = [0.041040100250626564, 0.1588345864661654, 0.20708020050125314, 0.2020
 
 def get_student_k(alpha, m):
     return {
+        (0.05, 4): 2.132,
+        # …
         (0.05, 18): 2.101,
         (0.05, 19): 2.093,
     }[(alpha, m)]
@@ -28,16 +30,18 @@ def get_student_k(alpha, m):
 def get_smirnov_k(alpha, n):
     """Критические значения критерия Смирнова"""
     return {
+        (0.05, 5): 1.67,
+        # …
         (0.05, 18): 2.50,
         (0.05, 19): 2.53,
         (0.05, 20): 2.53,
     }[alpha, n]
 
 
-def main():
+def main(iterable):
     alpha = 0.05
 
-    for i, ls in enumerate((result1, result2, result3)):
+    for i, ls in enumerate(iterable):
         print('Фаза %d' % (i + 1))
         while True:
             n = len(ls)
@@ -100,4 +104,5 @@ def main():
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s [%(levelname)s] %(funcName)s:%(name)s:%(lineno)d: %(message)s',
                         level=logging.DEBUG)
-    main()
+    # main((result1, result2, result3))
+    main([[1.95, 2.68, 4.22, 2.47, 1.63]])
